@@ -1,0 +1,8 @@
+-Function Declarations:
+Function declarations are entirely hoisted, meaning you can call them before they are declared in the code. 
+
+-Variable Declarations (with var):
+Variable declarations using var are also hoisted, but their initial values are set to undefined. 
+
+-Variables (with let and const):
+While variables declared with let and const are also hoisted, they are not initialized. This means attempting to access them before their declaration will result in a ReferenceError. 
