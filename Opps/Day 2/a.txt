@@ -1,0 +1,565 @@
+import java.util.*;
+
+public class ParkingManagementSystem {
+    public static void main(String[] args) {
+        ParkingSystem pms = new ParkingSystem();
+    }
+}
+
+class Car {
+    String name;
+    String carNumber;
+    String carType;
+
+    Car(String name, String carNumber, String carType) {
+        this.name = name;
+        this.carNumber = carNumber;
+        this.carType = carType;
+    }
+}
+
+class Customer {
+    String name;
+    Car car;
+
+    Customer(String name, Car car) {
+        this.name = name;
+        this.car = car;
+    }
+}
+
+class ParkingRecords {
+    Car car;
+    Customer customer;
+    float parkingTime;
+    float parkingReturnTime;
+    float totalPrice;
+
+    ParkingRecords(Car car, Customer customer, float parkingTime) {
+        this.car = car;
+        this.customer = customer;
+        this.parkingTime = parkingTime;
+        this.parkingReturnTime = -1; // -1 indicates car is still parked
+    }
+
+    public void markReturned(float returnTime) {
+        this.parkingReturnTime = returnTime;
+    }
+
+    public float calculatePrice() {
+        float duration = parkingReturnTime - parkingTime;
+        if (duration <= 0)
+            return 0;
+        float price = 0;
+
+        if (duration > 0) {
+            price += 4;
+            duration -= 1;
+        }
+
+        if (duration > 0) {
+            float nextTwoHours = Math.min(2, duration);
+            price += nextTwoHours * 3.5f;
+            duration -= nextTwoHours;
+        }
+
+        if (duration > 0) {
+            price += duration * 2.5f;
+        }
+
+        return price;
+    }
+}
+
+class ParKingFlore {
+    int lenght;
+    int width;
+    int floreNumber;
+    int numberOfEntry;
+    int numberOfExit;
+    boolean isSpaceAvaliable;
+    int reserverSlotForBike;
+    int reserverSlotForTruck;
+    Car[][] parkingGrid;
+
+    ParKingFlore(int lenght, int width, int floreNumber, int numberOfEntry, int numberOfExit) {
+        this.lenght = lenght;
+        this.width = width;
+        this.floreNumber = floreNumber;
+        this.numberOfEntry = numberOfEntry;
+        this.numberOfExit = numberOfExit;
+        this.reserverSlotForBike = 5;
+        this.reserverSlotForTruck = 5;
+        parkingGrid = new Car[lenght][width];
+        this.isSpaceAvaliable = true;
+
+        int totalSlot = lenght * width;
+        int reservedSlot = reserverSlotForBike + reserverSlotForTruck;
+
+        int carSlot = totalSlot - reservedSlot;
+        int bikeSlot = reserverSlotForBike;
+        int truckSlot = reserverSlotForTruck;
+
+        for (int i = 0; i < lenght; i++) {
+            for (int j = 0; j < width; j++) {
+                if (carSlot > 0) {
+                    parkingGrid[i][j] = new Car("car", "-1", "car");
+                    carSlot--;
+
+                } else if (bikeSlot > 0) {
+
+                    parkingGrid[i][j] = new Car("bike", "-1", "bike");
+                    bikeSlot--;
+                } else if (truckSlot > 0) {
+                    parkingGrid[i][j] = new Car("truck", "-1", "truck");
+                    truckSlot--;
+
+                }
+
+            }
+        }
+    }
+
+    public int getLen() {
+        return lenght;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+
+    public void updateReservedSlots(int newBikeSlots, int newTruckSlots) {
+        int totalSlots = lenght * width;
+        int reservedSlots = newBikeSlots + newTruckSlots;
+    
+        if (reservedSlots > totalSlots) {
+            System.out.println("Error: Reserved slots exceed total available slots.");
+            return;
+        }
+    
+        this.reserverSlotForBike = newBikeSlots;
+        this.reserverSlotForTruck = newTruckSlots;
+    
+        int carSlots = totalSlots - reservedSlots;
+        int bikeSlots = newBikeSlots;
+        int truckSlots = newTruckSlots;
+    
+        for (int i = 0; i < lenght; i++) {
+            for (int j = 0; j < width; j++) {
+                if (carSlots > 0) {
+                    parkingGrid[i][j] = new Car("car", "-1", "car");
+                    carSlots--;
+                } else if (bikeSlots > 0) {
+                    parkingGrid[i][j] = new Car("bike", "-1", "bike");
+                    bikeSlots--;
+                } else if (truckSlots > 0) {
+                    parkingGrid[i][j] = new Car("truck", "-1", "truck");
+                    truckSlots--;
+                }
+            }
+        }
+    
+        System.out.println("Reserved slots updated successfully!");
+    }
+    
+    public void showParkingFlore() {
+        System.out.println("Parking Floor Numbe = " + floreNumber);
+        System.out.println();
+
+        int numberOfCarParked = 0;
+        int totalSpace = 0;
+        int emptySpace = 0;
+
+        for (int i = 0; i < getLen(); i++) {
+            for (int j = 0; j < getWidth(); j++) {
+                System.out.print(" | " + parkingGrid[i][j].name + " | ");
+                if (parkingGrid[i][j].carNumber == "-1") {
+                    emptySpace++;
+
+                }
+            }
+            System.out.println("\n");
+        }
+
+        totalSpace = (getLen()) * (getWidth());
+        numberOfCarParked = totalSpace - emptySpace;
+
+        System.out.println("Floor Details : ");
+
+        System.out.println("Car Parked = " + numberOfCarParked + " space avaliabel for car = " + emptySpace
+                + " Total space in floor for car = " + totalSpace);
+        if (totalSpace == numberOfCarParked) {
+            System.out.println("floore is full choose another floor");
+
+        }
+        System.out.println(
+                "--------------------------------------------------------------------------------------------------------------------------");
+
+    }
+
+    public boolean isSpaceAvaliable() {
+
+        for (int i = 0; i < getLen(); i++) {
+            for (int j = 0; j < getWidth(); j++) {
+                if (parkingGrid[i][j].carNumber != "-1") {
+                    return true;
+                }
+            }
+
+        }
+        isSpaceAvaliable = false;
+        return false;
+    }
+
+    public boolean isSpaceAvaliableCar() {
+
+        for (int i = 0; i < getLen(); i++) {
+            for (int j = 0; j < getWidth(); j++) {
+                if (parkingGrid[i][j].carType != "car" && parkingGrid[i][j].carNumber != "-1") {
+                    return true;
+                }
+            }
+
+        }
+        isSpaceAvaliable = false;
+        return false;
+    }
+
+    public boolean isSpaceAvaliableBike() {
+
+        for (int i = 0; i < getLen(); i++) {
+            for (int j = 0; j < getWidth(); j++) {
+                if (parkingGrid[i][j].carType != "bike" && parkingGrid[i][j].carNumber != "-1") {
+                    return true;
+                }
+            }
+
+        }
+        isSpaceAvaliable = false;
+        return false;
+    }
+
+    public boolean isSpaceAvaliableTruck() {
+
+        for (int i = 0; i < getLen(); i++) {
+            for (int j = 0; j < getWidth(); j++) {
+                if (parkingGrid[i][j].carType != "truck" && parkingGrid[i][j].carNumber != "-1") {
+                    return true;
+                }
+            }
+
+        }
+        isSpaceAvaliable = false;
+        return false;
+    }
+    public boolean doCarParking(Car car, int row, int col, Customer customer, float parkingTime) {
+        Car currentSlot = parkingGrid[row][col];
+        if (row < 0 || row >= lenght || col < 0 || col >= width) {
+            System.out.println("Invalid parking spot.");
+            return false;
+        }
+    
+    
+        else if(!currentSlot.carNumber.equals("-1")) {
+            System.out.println("Another vehicle is already parked here.");
+            return false;
+        }
+    
+        else if (!currentSlot.carType.equals(car.carType)) {
+            System.out.println("Your vehicle type doesn't match this slot.");
+            return false;
+        }
+        else{
+
+            
+            parkingGrid[row][col] = car;
+            System.out.println("Vehicle parked successfully at (" + row + ", " + col + ").");
+
+         
+            return true;
+        }
+    }
+    
+
+    public void removeCar(String carNumber) {
+        for (int i = 0; i < getLen(); i++) {
+            for (int j = 0; j < getWidth(); j++) {
+                Car vehicel = parkingGrid[i][j];
+                if (parkingGrid[i][j].carNumber.equals(carNumber)) {
+                    parkingGrid[i][j] = new Car(vehicel.name, "-1", vehicel.carType);
+                    return;
+                }
+            }
+        }
+    }
+
+    public boolean hasCar(String carNumber) {
+        for (int i = 0; i < getLen(); i++) {
+            for (int j = 0; j < getWidth(); j++) {
+                if (parkingGrid[i][j].carNumber.equals(carNumber)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+class ParkingSystem {
+
+    Admin admin = new Admin();
+    Scanner sc = new Scanner(System.in);
+
+    ParkingSystem() {
+        System.out.println("Welcome to the Parking Management System ");
+
+        for (int i = 1; i <= 3; i++) {
+            ParKingFlore pf = new ParKingFlore(5, 5, i, 1, 1);
+            // admin.floors.add(pf);
+            admin.addFlore(pf);
+        }
+
+        admin.showAllFloors();
+        start();
+    }
+
+    public void start() {
+        while (true) {
+            System.out.println("Choose an option:");
+            System.out.println("1. Add Floor");
+            System.out.println("2. Remove Floor");
+            System.out.println("3. Update Floor");
+            System.out.println("4. Show All Floors");
+            System.out.println("5. Park a Car");
+            System.out.println("6. Return a Car");
+            System.out.println("7. Show All Parking Records");
+            System.out.println("8. Exit");
+
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1 -> admin.addFloorInteractive();
+                case 2 -> admin.removeFloorInteractive();
+                case 3 -> admin.updateFloorInteractive();
+                case 4 -> admin.showAllFloors();
+                case 5 -> admin.parkCarInteractive();
+                case 6 -> admin.returnCarInteractive();
+                case 7 -> admin.showAllRecords();
+                case 8 -> {
+                    System.out.println(" Exiting Parking System. Goodbye!");
+                    return;
+                }
+                default -> System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+}
+
+class Admin {
+    private ArrayList<ParKingFlore> floors = new ArrayList<>();
+    private ArrayList<ParkingRecords> records = new ArrayList<>();
+
+    Scanner sc = new Scanner(System.in);
+
+    public void addFlore(ParKingFlore pf) {
+        floors.add(pf);
+
+    }
+
+    public void showAllFloors() {
+        for (ParKingFlore pf : floors) {
+            pf.showParkingFlore();
+        }
+    }
+
+    public void addFloorInteractive() {
+
+        System.out.println("You are going to add floor number " + (floors.size() + 1));
+
+        int floorNumber = floors.size() + 1;
+        System.out.println("Enter number of rows: ");
+        int rows = sc.nextInt();
+        System.out.print("Enter number of columns: ");
+        int cols = sc.nextInt();
+        System.out.print("Enter number of Entries: ");
+        int entry = sc.nextInt();
+        System.out.print("Enter number of Exits: ");
+        int exit = sc.nextInt();
+
+        ParKingFlore newFloor = new ParKingFlore(rows, cols, floorNumber, entry, exit);
+        floors.add(newFloor);
+        System.out.println("Floor " + floorNumber + " added.");
+    }
+
+    public void removeFloorInteractive() {
+        System.out.print("Enter floor number to remove: ");
+        int floorNumber = sc.nextInt();
+        removeFloor(floorNumber);
+    }
+
+    public void updateFloorInteractive() {
+        System.out.print("Enter floor number to update: ");
+        int floorNumber = sc.nextInt();
+        System.out.print("Enter new rows: ");
+        int rows = sc.nextInt();
+        System.out.print("Enter new columns: ");
+        int cols = sc.nextInt();
+        System.out.print("Enter new number of entries: ");
+        int entries = sc.nextInt();
+        System.out.print("Enter new number of exits: ");
+        int exits = sc.nextInt();
+        
+        System.out.print("Enter new reserved slots for bikes: ");
+        int bikeSlots = sc.nextInt();
+        System.out.print("Enter new reserved slots for trucks: ");
+        int truckSlots = sc.nextInt();
+    
+        int totalSlots = rows * cols;
+        if (bikeSlots + truckSlots > totalSlots) {
+            System.out.println("Reserved slots exceed total available slots. Update failed.");
+            return;
+        }
+    
+        ParKingFlore updatedFloor = new ParKingFlore(rows, cols, floorNumber, entries, exits);
+        updatedFloor.updateReservedSlots(bikeSlots, truckSlots);  // apply custom slots after construction
+        updateFloor(floorNumber, updatedFloor);
+    
+        System.out.println("✅ Floor " + floorNumber + " updated successfully.");
+    }
+
+    
+    
+
+    public void parkCarInteractive() {
+        System.out.println("we have " + floors.size() + " floore choose any of them");
+        System.out.print("Enter floor number: ");
+        int floorNumber = sc.nextInt();
+        if (floorNumber < 0 || floorNumber > floors.size()) {
+            System.out.println("invalid floor number try again");
+            parkCarInteractive();
+        }
+        ParKingFlore flore = floors.get(floorNumber - 1);
+        if (flore.isSpaceAvaliable) {
+
+            flore.showParkingFlore();
+        } else {
+            flore.showParkingFlore();
+            System.out.println(" choose another floore");
+            parkCarInteractive();
+
+        }
+
+        sc.nextLine();
+        System.out.print("Enter vehicle type (car/bike/truck): ");
+        String type = sc.nextLine().toLowerCase();
+        System.out.print("Enter " + type + "name: ");
+        String carName = sc.nextLine();
+        System.out.print("Enter " + type + "number: ");
+        String carNumber = sc.nextLine();
+        System.out.print("Enter customer name: ");
+        String customerName = sc.nextLine();
+        System.out.print("Enter row: ");
+        int row = sc.nextInt();
+        System.out.print("Enter column: ");
+        int col = sc.nextInt();
+        System.out.print("Enter parking time in hours (e.g., 1.5): ");
+        float parkingTime = sc.nextFloat();
+
+        Car car = new Car(carName, carNumber, type);
+        Customer customer = new Customer(customerName, car);
+        parkCar(floorNumber, car, customer, row, col, parkingTime);
+    }
+
+    public void returnCarInteractive() {
+        sc.nextLine();
+        System.out.print("Enter car number: ");
+        String carNumber = sc.nextLine();
+        System.out.print("Enter return time in hours (e.g., 3.5): ");
+        float returnTime = sc.nextFloat();
+        returnCar(carNumber, returnTime);
+    }
+
+    public void parkCar(int floorNumber, Car car, Customer customer, int row, int col, float parkingTime) {
+        for (ParKingFlore floor : floors) {
+            if (floor.floreNumber == floorNumber) {
+                if(floor.doCarParking(car, row, col,customer,parkingTime)){
+                    ParkingRecords record = new ParkingRecords(car, customer, parkingTime);
+                    records.add(record);
+                    System.out.println(car.carType + " parked successfully on floor " );
+                }
+          
+                return;
+            }
+        }
+        System.out.println("Floor not found.");
+    }
+
+    public void returnCar(String carNumber, float returnTime) {
+        for (ParkingRecords record : records) {
+            if (record.car.carNumber.equals(carNumber) && record.parkingReturnTime == -1) {
+                record.markReturned(returnTime);
+                float price = record.calculatePrice();
+                record.totalPrice = price;
+
+                for (ParKingFlore floor : floors) {
+                    if (floor.hasCar(carNumber)) {
+                        floor.removeCar(carNumber);
+                        System.out.println("✅ Car returned. Total price: $" + price);
+                        return;
+                    }
+                }
+            }
+        }
+        System.out.println("Car not found or already returned.");
+    }
+
+    public void removeFloor(int floorNumber) {
+        for (int i = 0; i < floors.size(); i++) {
+            if (floors.get(i).floreNumber == floorNumber) {
+                floors.remove(i);
+                System.out.println("Floor " + floorNumber + " removed.");
+                return;
+            }
+        }
+        System.out.println("Floor not found.");
+    }
+
+    public void updateFloor(int floorNumber, ParKingFlore updatedFloor) {
+        for (int i = 0; i < floors.size(); i++) {
+            if (floors.get(i).floreNumber == floorNumber) {
+                floors.set(i, updatedFloor);
+                System.out.println("Floor " + floorNumber + " updated.");
+                return;
+            }
+        }
+        System.out.println("Floor not found.");
+    }
+
+    public void showAllRecords() {
+        if (records.isEmpty()) {
+            System.out.println("No parking records yet.");
+            return;
+        }
+
+        for (ParkingRecords rec : records) {
+            System.out.println(rec.car.carType + rec.car.name + " (" + rec.car.carNumber + ")");
+            System.out.println("Customer: " + rec.customer.name);
+            System.out.println("Start: " + rec.parkingTime + "h");
+            if (rec.parkingReturnTime != -1) {
+                System.out.println(" Return: " + rec.parkingReturnTime + "h");
+                System.out.println("Price: $" + rec.totalPrice);
+            } else {
+                System.out.println("Still Parked");
+            }
+        }
+    }
+
+    public void addRecords (ParkingRecords rec){
+        records.add(rec);
+
+    }
+}
