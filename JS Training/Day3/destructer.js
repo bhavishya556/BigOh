@@ -48,11 +48,13 @@ console.log(city); // Noida
 // Nested object destructuring
 const profile = {
   name: "Bhavishya",
+
   address: {
     city: "Noida",
     pincode: 201301
   }
 };
+
 
 const {
   address: { city: loc, pincode }
@@ -85,10 +87,10 @@ console.log(title, firstTag, views,restt); // Dev JS 100
 // 🔹 4. Destructuring in Function Parameters
 
 // Array params
-function printCoordinates([x, y]) {
+function printCoordinates(...h) {
   console.log(`X: ${x}, Y: ${y}`);
 }
-printCoordinates([10, 20]);
+printCoordinates(10, 20);
 
 // Object params
 function greet({ name, role }) {

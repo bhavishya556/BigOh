@@ -137,7 +137,9 @@ function fetchUserDataCallback(callback) {
         }, 2000);
       });
       console.log("Async/Await User Data:", user);
+      console.log(reject);
     } catch (err) {
+        console.log(reject);
       console.log("Async/Await Error:", err);
     }
   }
