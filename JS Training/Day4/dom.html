@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOM Methods Explained</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    .highlight {
+    }
+    #animateBox {
+        width: 100px;
+        height: 100px;
+        background: teal;
+        position: relative;
+        transition: all 0.5s;
+    }
+    .move {
+        transform: translateX(200px) rotate(180deg); 
+      background-color: yellow;
+    }
+    .hidden {
+      display: none;
+    }
+    .red {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  //BIM
+  <h1 id="mainTitle">DOM Methods Demo</h1>
+
+  <!-- Input and Greet Button -->
+  <input type="text" id="nameInput" placeholder="Enter your name" />
+  <button id="greetBtn">Greet</button>
+  <p id="greeting"></p>
+
+  <!-- Animation Box -->
+  <div id="animateBox"></div>
+  <button id="toggleAnimation">Toggle Animation</button>
+
+  <!-- Elements with class 'demo' -->
+  <div class="demo">This is a demo class element</div>
+  <div class="demo">Another demo class element</div>
+
+  <!-- List with dynamic items -->
+  <ul id="list">
+    <li class="item">Item 1</li>
+    <li class="item">Item 2</li>
+  </ul>
+  <button id="addItem">Add Item</button>
+  <button id="removeLast">Remove Last</button>
+
+  <!-- DOM and CSS manipulation buttons -->
+  <!-- <button id="toggleClass">Toggle Class</button> -->
+  <!-- <button id="setAttr">Set Attribute</button> -->
+
+  <!-- Text adder -->
+  <button id="addText">Add Text to DOM</button>
+  <div id="textContainer"></div>
+
+  <script>
+    // Element selectors using different DOM methods
+    const title = document.getElementById("mainTitle"); // Select element by ID
+    const input = document.querySelector("#nameInput"); // Select using querySelector
+    const greetBtn = document.querySelector("#greetBtn"); // Select using querySelector
+    const greeting = document.getElementById("greeting");
+    const animateBox = document.getElementById("animateBox");
+    const toggleAnim = document.getElementById("toggleAnimation");
+    const demos = document.getElementsByClassName("demo"); // Select elements by class
+    const items = document.getElementsByTagName("li"); // Select all <li> elements
+    const itemList = document.querySelector("#list");
+    const textContainer = document.getElementById("textContainer");
+    const addTextBtn = document.getElementById("addText");
+
+    // Event Listener: When greet button is clicked, display greeting message
+    greetBtn.addEventListener("click", () => {
+      greeting.textContent = `Hello, ${input.value}!`; // Change the text content of <p>
+    });
+
+    // Event Listener: Toggle animation class on box
+    toggleAnim.addEventListener("click", () => {
+      animateBox.classList.toggle("move"); // Toggle class to animate
+    });
+
+    // Add new list item dynamically
+    const addItem = document.getElementById("addItem");
+    addItem.addEventListener("click", () => {
+      const newItem = document.createElement("li"); // Create a new <li> element
+      newItem.textContent = `Item ${items.length + 1}`; // Set its text
+      newItem.className = "item"; // Assign class name
+      itemList.appendChild(newItem); // Add to the list
+    });
+
+    // Remove the last list item
+    const removeLast = document.getElementById("removeLast");
+    removeLast.addEventListener("click", () => {
+      const lastItem = itemList.lastElementChild; // Get last child of the list
+      if (lastItem) itemList.removeChild(lastItem); // Remove it if exists
+    });
+
+    // Toggle a CSS class on the <h1> title
+    const toggleClass = document.getElementById("toggleClass");
+    toggleClass.addEventListener("click", () => {
+      title.classList.toggle("highlight"); // Highlight background
+    });
+
+    // Set a custom data attribute
+    // const setAttr = document.getElementById("setAttr");
+    // setAttr.addEventListener("click", () => {
+    //   title.setAttribute("data-modified", "true"); // Set custom attribute
+    //   alert("Custom attribute 'data-modified' set to true");
+    // });
+
+    // Keydown listener on whole document
+    document.addEventListener("keydown", (e) => {
+      console.log(`Key pressed: ${e.key}`); // Log key press
+    });
+
+    // Input box focus and blur styling
+    input.addEventListener("focus", () => {
+      input.style.border = "2px solid blue"; // On focus
+    });
+
+    input.addEventListener("blur", () => {
+      input.style.border = "1px solid #ccc"; // On blur
+    });
+
+    // Loop through all .demo elements and attach click listeners
+    Array.from(demos,(data)=> []).forEach((el, index) => {
+      el.addEventListener("click", () => {
+        alert(`Demo element ${index + 1} clicked`);
+      });
+    });
+
+    // Add a paragraph dynamically to the DOM
+    addTextBtn.addEventListener("click", () => {
+      const para = document.createElement("p"); // Create paragraph
+      para.textContent = "📄 This text was added dynamically to the DOM.";
+      textContainer.appendChild(para); // Append to container
+    });
+  </script>
+</body>
+</html>

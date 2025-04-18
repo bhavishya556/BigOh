@@ -1,0 +1,67 @@
+Explanation of Code:
+Class Declaration and Syntax:
+
+We start by defining a class using the class keyword.
+
+We define a constructor method that initializes the properties.
+
+The greet() method is an instance method, called on instances of the class.
+
+Constructor:
+
+The constructor() method is called when we create a new instance of a class (new Car(...)).
+
+It initializes instance properties like brand and model for a Car.
+
+Instance Properties and Methods:
+
+Instance properties (like name, age) are initialized via the constructor and accessed using this.
+
+Instance methods, like describe(), operate on the properties of a specific instance.
+
+Role of this in Classes:
+
+this refers to the current object (instance) within the class.
+
+It is used to access instance properties and methods.
+
+Inheritance:
+
+The Dog class extends the Animal class using the extends keyword, allowing it to inherit methods like describe().
+
+The super() function is used to call the parent class's constructor.
+
+Getter and Setter Methods:
+
+Getters and setters allow controlled access to object properties.
+
+The area getter calculates the area based on the width and height.
+
+The width setter ensures that only valid values are assigned to the width property.
+
+Static Methods:
+
+Static methods are defined using the static keyword and are invoked on the class itself, not an instance.
+
+Static methods are useful for utility functions (like Calculator.add()).
+
+Private Methods and Fields:
+
+Private fields are denoted using #. They cannot be accessed directly outside the class.
+
+Private methods and fields allow for better encapsulation of data.
+
+Summary:
+Classes in JavaScript are syntactic sugar over prototypes, providing a more structured approach to creating and managing objects.
+
+Instance properties and methods are the core functionality of objects created from a class.
+
+Inheritance allows a subclass to inherit properties and methods from a superclass.
+
+Getters and setters allow you to control the reading and writing of properties.
+
+Static methods are useful when you want a method that works on the class itself, not an instance.
+
+Private fields and methods ensure encapsulation by restricting direct access outside the class.
+
+This structure can be easily copied and used as a reference in your code!

@@ -40,7 +40,11 @@ const data =[
     if (!acc[curr.batch_id]) {
       acc[curr.batch_id] = [];
     }
-    acc[curr.batch_id].push(curr);
+
+
+    const {batch_id, ...rest} = curr
+    ////delete, without
+    acc[curr.batch_id].push(rest);
     return acc;
   }, {});
   console.log(result);
