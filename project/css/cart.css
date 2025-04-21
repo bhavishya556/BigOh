@@ -1,0 +1,118 @@
+/* Styling for the entire body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  /* Header styling */
+  header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  .nav-left, .nav-mid, .nav-right {
+    font-size: 18px;
+  }
+  
+  .nav-right a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .nav-right a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Main section styling */
+  main {
+    padding: 20px;
+    background-color: white;
+    max-width: 1000px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Cart Item container */
+  #cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 100vh;
+  }
+  
+  /* Styling for each individual cart item */
+  .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cart-item:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Styling for product image */
+  .cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  /* Styling for product title */
+  .cart-item h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 15px;
+    flex-grow: 1;
+    color: #333;
+  }
+  
+  /* Styling for price and quantity */
+  .cart-item p {
+    font-size: 16px;
+    color: #666;
+    margin: 0 10px;
+  }
+  
+  /* Styling for quantity */
+  .cart-item p:nth-child(4) {
+    font-weight: bold;
+  }
+  
+  /* Optional button styling (remove item from cart) */
+  .remove-from-cart-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .remove-from-cart-btn:hover {
+    background-color: #e60000;
+  }
+  

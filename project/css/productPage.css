@@ -1,0 +1,122 @@
+:root {
+    --primary: #2874f0;
+    --bg: #f5f5f5;
+    --text: #212121;
+    --subtext: #757575;
+    --card: #fff;
+    --radius: 8px;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  
+  .product-containerr {
+    max-width: 1100px;
+    margin: 2rem auto;
+    display: flex;
+    gap: 2rem;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+  
+  }
+  
+  .product-left {
+    flex: 1 1 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  
+  #product-image {
+    width: 100%;
+    max-width: 300px;
+    object-fit: contain;
+    border-radius: var(--radius);
+    background: #fff;
+    padding: 1rem;
+    box-shadow: var(--shadow);
+  }
+  
+  .product-right {
+  
+    flex: 2 1 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .product-right h1 {
+    color: var(--primary);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .bold {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #2e7d32;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    color: var(--subtext);
+  }
+  
+  .product-rating {
+    font-weight: 600;
+    color: #ff9800;
+  }
+  
+  #reviews-section {
+    max-width: 1100px;
+    margin: 2rem auto;
+    background: var(--card);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  
+  #reviews-section h2 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+  
+  #reviews > div {
+    border-top: 1px solid #ddd;
+    padding: 1rem 0;
+  }
+  
+  #reviews > div:first-child {
+    border-top: none;
+  }
+  
+  #reviews p {
+    margin: 0.3rem 0;
+  }
+  
+  /* @media (max-width: 768px) {
+    .product-container {
+      flex-direction: column;
+      padding: 1rem;
+    }
+  
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    #product-image {
+      max-width: 100%;
+    }
+  }
+   */

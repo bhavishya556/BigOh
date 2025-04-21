@@ -1,0 +1,289 @@
+/* General body styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  background-color: #f7f7f7;
+  overflow: hidden;
+}
+
+/* Product list container */
+.product-list {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+ overflow-y: scroll;
+}
+.page-size{
+  padding-left: 50px;
+}
+.product-container{
+  height: 70vh; /* Fixed height for the product container */
+  overflow-y: scroll; /* Enable vertical scrolling */
+  overflow-x: hidden;
+}
+
+/* Individual product card styling */
+.product-card {
+  padding: 20px;
+  background: #fff;
+  text-decoration: none;
+  color: #333;
+  width: 220px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  position: relative;
+  padding-bottom: 50px;
+}
+
+/* Product card hover effect */
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Product card image */
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+
+/* On hover, image scales */
+.product-card:hover img {
+  transform: scale(1.01);
+}
+
+/* Product card text elements */
+.product-card h3 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-top: 10px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.product-card p {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+.add-to-cart-btn {
+  background-color: gray;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+
+
+}
+
+
+.add-to-cart-btn:hover {
+  background-color: rgb(46, 23, 23);
+}
+
+
+/* Stock status and other details */
+.product-stock,
+.product-rating,
+.product-warranty,
+.product-shipping {
+
+  color: #669;
+  display: flex;
+  font-size: 10px;
+  flex-direction: column
+}
+
+.product-rating{
+  position: absolute;
+  right: 5px;
+  bottom: 90px;
+
+}
+.product-tags {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.product-tags .tag {
+  background: #e0e0e0;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+
+  color: #555;
+  transition: background-color 0.3s ease;
+}
+
+.product-tags .tag:hover {
+  background: #333;
+  color: #fff;
+}
+
+/* Pagination controls (unchanged as requested) */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 10px;
+  background-color: #cccc;
+}
+
+.pagination-controls button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Pagination numbers container */
+.pagination-numbers {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.pagination-numbers button {
+  border: 1px solid #ccc;
+  background: #fff;
+  border: 0px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+
+  
+}
+
+.pagination-numbers button:hover {
+  background: #333;
+  color: #fff;
+}
+
+.pagination-numbers .active-page {
+  background: #333;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Page size input */
+#pageSize {
+  margin: 15px;
+  padding: 5px;
+  border-radius: 10px;
+  border: 0px solid #ccc;
+}
+
+
+/* Styling for the Wishlist button */
+.add-to-wishlist-btn {
+  background-color: transparent;
+  border: none;
+  color: #FF6347; /* Tomato color for the heart */
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+
+}
+
+.add-to-wishlist-btn:hover {
+  color: red; /* Darker orange-red when hovered */
+  transform: scale(1.3);
+  transition: 300ms;
+}
+
+/* Optional: Add some margin or padding around the heart icon */
+.add-to-wishlist-btn i {
+  margin-right: 8px;
+}
+
+/* Skeleton loader container */
+.skeleton-loader {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Skeleton card */
+.skeleton-card {
+  width: 220px;
+  height: 300px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer effect */
+.skeleton-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(224, 224, 224, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(224, 224, 224, 0) 100%);
+  animation: shimmer 1.5s infinite;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Hide skeleton loader by default */
+.skeleton-loader.hidden {
+  display: none;
+}
+
+#prevPage{
+  padding: 6px;
+  background-color: black;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 0px solid #ccc;
+  
+}
+#nextPage{
+  padding: 6px;
+  border: 0px solid #ccc;
+  background-color: black;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.currentPageDisplay{
+  font-size: 12px;
+  font-family: 'Courier New', Courier, monospace;
+}

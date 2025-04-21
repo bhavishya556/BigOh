@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details</title>
+  <link rel="stylesheet" href="css/productPage.css"/>
+  <link rel="stylesheet" href="css/header.css"/>
+</head>
+<body>
+  <div id="header"></div>
+
+  <main class="product-containerr">
+    <div class="product-left">
+      <img id="product-image" src="" alt="Product Image" />
+    </div>
+  
+    <div class="product-right">
+      <h1 id="product-title">Loading...</h1>
+      <p id="product-description"></p>
+      <p id="product-price" class="bold"></p>
+  
+      <div class="product-grid">
+        <p id="product-category"></p>
+        <p id="product-discount"></p>
+        <p id="product-stock"></p>
+        <p id="product-tags"></p>
+        <p id="product-brand"></p>
+        <p id="product-sku"></p>
+        <p id="product-weight"></p>
+        <p id="product-dimensions"></p>
+        <p id="product-warranty"></p>
+        <p id="product-shipping"></p>
+        <p id="product-availability"></p>
+        <p id="product-return"></p>
+        <p id="product-min-order"></p>
+        <p id="product-barcode"></p>
+        <p id="product-created"></p>
+        <p id="product-updated"></p>
+      </div>
+  
+      <div class="product-rating" id="product-rating"></div>
+    </div>
+  </main>
+  
+  <section id="reviews-section">
+    <h2>Reviews</h2>
+    <div id="reviews"></div>
+  </section>
+  
+
+  <div id="footer"></div>
+
+  <script src="js/main.js"></script>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    if (id) {
+      fetch(`https://dummyjson.com/products/${id}`)
+        .then(res => res.json())
+        .then(product => {
+          document.getElementById("product-title").textContent = product.title;
+          document.getElementById("product-description").textContent = product.description;
+          document.getElementById("product-price").textContent = `$${product.price}`;
+
+          const image = document.getElementById("product-image");
+          image.src = product.thumbnail;
+          image.alt = product.title;
+          image.style.display = "block";
+
+          // Additional details
+          document.getElementById("product-category").textContent = `Category: ${product.category}`;
+          document.getElementById("product-discount").textContent = `Discount: ${product.discountPercentage}%`;
+          document.getElementById("product-rating").textContent = `Rating: ${product.rating}`;
+          document.getElementById("product-stock").textContent = `Stock: ${product.stock}`;
+          document.getElementById("product-tags").textContent = `Tags: ${product.tags.join(", ")}`;
+          document.getElementById("product-brand").textContent = `Brand: ${product.brand}`;
+          document.getElementById("product-sku").textContent = `SKU: ${product.sku}`;
+          document.getElementById("product-weight").textContent = `Weight: ${product.weight}g`;
+          document.getElementById("product-dimensions").textContent =
+            `Dimensions: ${product.dimensions.width} x ${product.dimensions.height} x ${product.dimensions.depth} cm`;
+          document.getElementById("product-warranty").textContent = `Warranty: ${product.warrantyInformation}`;
+          document.getElementById("product-shipping").textContent = `Shipping: ${product.shippingInformation}`;
+          document.getElementById("product-availability").textContent = `Availability: ${product.availabilityStatus}`;
+          document.getElementById("product-return").textContent = `Return Policy: ${product.returnPolicy}`;
+          document.getElementById("product-min-order").textContent = `Minimum Order: ${product.minimumOrderQuantity}`;
+          document.getElementById("product-barcode").textContent = `Barcode: ${product.meta.barcode}`;
+          document.getElementById("product-created").textContent =
+            `Created At: ${new Date(product.meta.createdAt).toLocaleString()}`;
+          document.getElementById("product-updated").textContent =
+            `Last Updated: ${new Date(product.meta.updatedAt).toLocaleString()}`;
+
+          // Reviews
+          const reviewsDiv = document.getElementById("reviews");
+          if (product.reviews && product.reviews.length > 0) {
+            product.reviews.forEach(r => {
+              const div = document.createElement("div");
+              div.style.borderBottom = "1px solid #ccc";
+              div.style.marginBottom = "1rem";
+              div.innerHTML = `
+                <p><strong>${r.reviewerName}</strong> (${r.reviewerEmail})</p>
+                <p>⭐ Rating: ${r.rating}</p>
+                <p>${r.comment}</p>
+                <p><small>${new Date(r.date).toLocaleDateString()}</small></p>
+              `;
+              reviewsDiv.appendChild(div);
+            });
+          } else {
+            reviewsDiv.innerHTML = "<p>No reviews available.</p>";
+          }
+
+        })
+        .catch(err => {
+          document.getElementById("product-title").textContent = "Product not found!";
+          console.error("Error fetching product:", err);
+        });
+    } else {
+      document.getElementById("product-title").textContent = "No product ID found in URL.";
+    }
+  </script>
+</body>
+</html>
