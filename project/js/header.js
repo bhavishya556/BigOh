@@ -23,9 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
           window.fetchProducts(1);
         } else {
           console.warn("window.fetchProducts is not defined");
+          
         }
         return;
       }
+      
+      
   
       searchTimeout = setTimeout(() => {
         console.log("Searching for:", query);

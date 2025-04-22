@@ -20,8 +20,14 @@
         <div id="suggestions" class="suggestions"></div>
       </div>
       <div class="nav-right">
-        <a href="cart.html">     <i class="fa fa-shopping-cart"  style="font-size:30px"></i></a>
-        <a href="wish.html">    <i class="fa fa-heart-o" style="font-size:30px; color: rgb(187, 69, 88);"></i></a>
+        <a href="cart.html">
+          <span id="cart-count" style="color: white; font-size: 18px; margin-right: 5px;">0</span>
+          <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+        </a>
+        <a href="wish.html">
+          <span id="wishlist-count" style="color: white; font-size: 18px; margin-right: 5px;">0</span>
+          <i class="fa fa-heart-o" style="font-size:30px; color: rgb(187, 69, 88);"></i>
+        </a>
       </div>
     </nav>
   </header>
@@ -66,8 +72,35 @@
 
   <div id="footer"></div>
 
+  <script>
+    // Function to update the cart and wishlist counts
+    function updateCounts() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+      const cartCountElement = document.getElementById("cart-count");
+      const wishlistCountElement = document.getElementById("wishlist-count");
+
+      if (cartCountElement) {
+        cartCountElement.textContent = cart.length; // Update cart count
+      }
+
+      if (wishlistCountElement) {
+        wishlistCountElement.textContent = wishlist.length; // Update wishlist count
+      }
+    }
+
+    // Call the function on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      updateCounts();
+
+      // Optional: Add an event listener to update counts dynamically across tabs
+      window.addEventListener("storage", updateCounts);
+    });
+  </script>
+
   <script src="js/main.js"></script>
-  <script src="js/header.js"></script> <!-- Second -->
+  <script src="js/header.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/util.js"></script>
   <script src="js/wish.js"></script>

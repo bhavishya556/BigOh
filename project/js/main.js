@@ -31,6 +31,30 @@ let pageSize = parseInt(pageSizeInput.value);
 let isLoading = false; // Prevent multiple API calls during scrolling
 const productCache = {}; // Cache to store fetched products by page
 
+// Create a sentinel element for IntersectionObserver
+const sentinel = document.createElement("div");
+sentinel.id = "sentinel";
+productContainer.appendChild(sentinel);
+
+// IntersectionObserver to load more products when the sentinel is visible
+const observer = new IntersectionObserver(
+  (entries) => {
+    const entry = entries[0];
+    if (entry.isIntersecting && !isLoading && currentPage * pageSize < totalProducts) {
+      currentPage++;
+      fetchProducts(currentPage, true); // Append products on intersection
+    }
+  },
+  {
+    root: productContainer, // Observe within the product container
+    rootMargin: "0px",
+    threshold: 1.0, // Trigger when the sentinel is fully visible
+  }
+);
+
+// Start observing the sentinel
+observer.observe(sentinel);
+
 // Fetch products from the API
 function fetchProducts(page, append = false) {
   if (isLoading) return; // Prevent multiple API calls
@@ -54,6 +78,9 @@ function fetchProducts(page, append = false) {
       totalProducts = data.total;
       productCache[page] = data.products; // Store the fetched data in the cache
       renderProducts(data.products, append);
+
+      // Update pagination buttons only after new products are fetched
+      // updatePaginationButtons();
     })
     .catch(error => {
       console.error("Error fetching products:", error);
@@ -91,7 +118,7 @@ function createProductCard(product) {
       <h3 class="product-title">${product.title}</h3>
       <p class="product-price">$${product.price}</p>
       <button class="cart-btn" data-id="${product.id}">
-        ${isInCart ? "Remove from Cart" : "Add to Cart"}
+        ${isInCart ? "Remove" : "Add to Cart"}
       </button>
     </div>
   `;
@@ -117,11 +144,15 @@ function toggleCart(product, button) {
   } else {
     // Add the product to the cart
     cart.push({ ...product, quantity: 1 });
-    button.textContent = "Remove from Cart";
+    button.textContent = "Remove ";
   }
 
   // Update the cart in localStorage
   localStorage.setItem("cart", JSON.stringify(cart));
+
+  // Dynamically update the cart count
+  const updateCounts = window.updateCounts || (() => {});
+  updateCounts();
 
   // Re-render the product list to update button states
   renderProducts(productCache[currentPage] || []);
@@ -156,7 +187,22 @@ function updatePaginationButtons() {
     });
 
     paginationNumbers.appendChild(btn);
-  }
+  }  productContainer.addEventListener("scroll", () => {
+    // Infinite scrolling logic
+    if (
+      productContainer.scrollTop + productContainer.clientHeight >= productContainer.scrollHeight - 50 &&
+      !isLoading &&
+      currentPage * pageSize < totalProducts
+    ) {
+      currentPage++;
+      fetchProducts(currentPage, true); // Append products on infinite scroll
+    }
+  
+    // Update pagination buttons when scrolling back up
+    if (productContainer.scrollTop === 0) {
+      updatePaginationButtons();
+    }
+  });
 }
 
 // Event listener for the Previous button
@@ -205,3 +251,23 @@ pageSizeInput.addEventListener("change", () => {
 
 // Initial fetch
 fetchProducts(currentPage);
+
+// function removeFromWishlist(id) {
+//   console.log("remove clle");
+//   let wishlist = JSON.parse(sessionStorage.getItem("wishlist")) || [];
+//   wishlist = wishlist.filter(item => item.id !== id);
+//   sessionStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+//   // Update wishlist count dynamically
+//   updateCounts();
+
+//   // Remove the item from the DOM
+//   const wishlistItem = document.querySelector(`[data-id="${id}"]`);
+//   if (wishlistItem) {
+//     wishlistItem.remove();
+//   }
+// }
+
+// Avoid calling fetchProducts or renderProducts here
+removeFromWishlist(product.id);
+// renderProducts(productCache[currentPage]); // This might cause the issue

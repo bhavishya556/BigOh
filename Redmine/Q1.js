@@ -19,4 +19,3 @@ function evaluateExpression(expression) {
   const expr = "[ 1+(2+3)*4-10/2 ]";
   const result = evaluateExpression(expr);
   console.log("✅ Result:", result); // Output: 16
-  

@@ -92,7 +92,7 @@ function createProductCard(product) {
       <h3 class="product-title">${product.title}</h3>
       <p class="product-price">$${product.price}</p>
       <button class="cart-btn" data-id="${product.id}">
-        ${isInCart ? "Remove from Cart" : "Add to Cart"}
+        ${isInCart ? "Remove " : "Add to Cart"}
       </button>
     </div>
   `;

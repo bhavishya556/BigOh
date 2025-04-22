@@ -1,4 +1,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+</script>
 <header style="background-color: #222;">
   <nav class="navbar" style="height: 10vh">
     <a href="index.html" class="nav-left">LOGO</a>
@@ -8,7 +12,7 @@
       <div id="suggestions" class="suggestions"></div> -->
     </div>
     <div class="nav-right">
-      <a href="cart.html">      <i class="fa fa-shopping-cart" style="font-size:30px"></i></a>
+      <a href="cart.html">    <p>number of item</p>  <i class="fa fa-shopping-cart" style="font-size:30px"></i></a>
 
       <a href="wish.html"><i class="fa fa-heart-o" style="font-size:30px;"></i></a>
     </div>

@@ -19,7 +19,10 @@ body {
  overflow-y: scroll;
 }
 .page-size{
+  position: absolute;
+  left: 10px;
   padding-left: 50px;
+  
 }
 .product-container{
   height: 70vh; /* Fixed height for the product container */
@@ -156,6 +159,7 @@ body {
   justify-content: center;
   gap: 10px;
   margin-top: 10px;
+
 }
 
 .pagination-numbers button {

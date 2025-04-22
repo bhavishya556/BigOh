@@ -1,86 +1,46 @@
 // Create product card with dynamic "Add to Cart" button
 function createProductCard(product) {
-  const card = document.createElement("a");
-  card.href = `product.html?id=${product.id}`;
-  card.className = "product-card";
-
-  const title = document.createElement("h3");
-  title.textContent = product.title;
-
-  const img = document.createElement("img");
-  img.src = product.thumbnail;
-  img.alt = product.title;
-  img.width = 100;
-
-  const price = document.createElement("p");
-  price.textContent = `$${product.price}`;
-
-  let rawRating = product.rating;
-
-  // Floor the rating, enforce min 1 and max 5
-  let stars = Math.floor(rawRating);
-  stars = Math.max(1, Math.min(stars, 5));
-  
-  // Create the star string
-  let starDisplay = '⭐'.repeat(stars);
-  
-  // Create the rating element
-  const rating = document.createElement("p");
-  rating.innerHTML = `${starDisplay}`;
-  rating.className = "product-rating";
-  
-
-  const tagsContainer = document.createElement("div");
-  tagsContainer.className = "product-tags";
-  product.tags.forEach(tag => {
-    const tagElement = document.createElement("span");
-    tagElement.textContent = tag;
-    tagElement.className = "tag";
-    tagsContainer.appendChild(tagElement);
-  });
-
-
-  // Add to Cart button
-  const addToCartBtn = document.createElement("button");
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const wishlist = JSON.parse(sessionStorage.getItem("wishlist")) || [];
+
   const isInCart = cart.some(item => item.id === product.id);
-  addToCartBtn.textContent = isInCart ? "Remove" : "Add to Cart";
-  addToCartBtn.className = "add-to-cart-btn";
+  const isInWishlist = wishlist.some(item => item.id === product.id);
+
+  // Create the product card using a template literal
+  const card = document.createElement("div");
+  card.className = "product-card";
+  card.innerHTML = `
+    <a href="product.html?id=${product.id}">
+      <img src="${product.thumbnail}" alt="${product.title}" width="100" />
+      <h3>${product.title}</h3>
+      <p>$${product.price}</p>
+      <p class="product-rating">${'⭐'.repeat(Math.max(1, Math.min(5, Math.floor(product.rating))))}</p>
+      <div class="product-tags">
+        ${product.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+      </div>
+    </a>
+    <button class="add-to-cart-btn">${isInCart ? "Remove from Cart" : "Add to Cart"}</button>
+    <button class="add-to-wishlist-btn">
+      <i class="${isInWishlist ? "fas fa-heart" : "far fa-heart"}"></i>
+    </button>
+  `;
+
+  // Add event listener for the "Add to Cart" button
+  const addToCartBtn = card.querySelector(".add-to-cart-btn");
   addToCartBtn.addEventListener("click", (e) => {
     e.preventDefault();
     toggleCart(product, addToCartBtn);
   });
 
-  // Add to Wishlist button with heart icon
-  const addToWishlistBtn = document.createElement("button");
-  addToWishlistBtn.className = "add-to-wishlist-btn";
-
-  const heartIcon = document.createElement("i");
-  heartIcon.className = isItemInWishlist(product.id) ? "fas fa-heart" : "far fa-heart";
-  addToWishlistBtn.appendChild(heartIcon);
-
+  // Add event listener for the "Add to Wishlist" button
+  const addToWishlistBtn = card.querySelector(".add-to-wishlist-btn");
   addToWishlistBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    if (isItemInWishlist(product.id)) {
-      removeFromWishlist(product.id);
-      heartIcon.className = "far fa-heart"; // Change to outline heart
-    } else {
-      addToWishlist(product);
-      heartIcon.className = "fas fa-heart"; // Change to filled heart
-    }
+    toggleWishlist(product, addToWishlistBtn);
   });
-
-  card.appendChild(title);
-  card.appendChild(img);
-  card.appendChild(price);
-  card.appendChild(rating);
-  card.appendChild(tagsContainer);
-  card.appendChild(addToCartBtn);
-  card.appendChild(addToWishlistBtn);
 
   return card;
 }
-
 
 // Check if item is in wishlist
 function isItemInWishlist(id) {
@@ -93,57 +53,60 @@ function addToWishlist(product) {
   const wishlist = JSON.parse(sessionStorage.getItem("wishlist")) || [];
   wishlist.push(product);
   sessionStorage.setItem("wishlist", JSON.stringify(wishlist));
-//   alert("Product added to wishlist!");
+
+  // Update wishlist count dynamically
+  updateCounts();
 }
 
 // Remove item from wishlist
 function removeFromWishlist(id) {
+  console.log("Removing from wishlist:", id);
   let wishlist = JSON.parse(sessionStorage.getItem("wishlist")) || [];
   wishlist = wishlist.filter(item => item.id !== id);
   sessionStorage.setItem("wishlist", JSON.stringify(wishlist));
-//   alert("Product removed from wishlist!");
+
+  // Update wishlist count dynamically
+  updateCounts();
 }
 
-  
+function addToCart(product) {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const existing = cart.find(item => item.id === product.id);
 
-  function addToCart(product) {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existing = cart.find(item => item.id === product.id);
-  
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({ ...product, quantity: 1 });
-    }
-  
-    localStorage.setItem("cart", JSON.stringify(cart));
-    // alert("Product added to cart!");
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
   }
-  
 
-  function toggleWishlist(product, btn) {
-    let wishlist = JSON.parse(sessionStorage.getItem("wishlist")) || [];
-  
-    // Check if the product is already in the wishlist
-    const isInWishlist = wishlist.some(item => item.id === product.id);
-  
-    if (isInWishlist) {
-      // If the product is in the wishlist, remove it
-      wishlist = wishlist.filter(item => item.id !== product.id);
-      btn.textContent = "Add to Wishlist"; // Update button text
-    } else {
-      // If the product is not in the wishlist, add it
-      wishlist.push(product);
-      btn.textContent = "Remove from Wishlist"; // Update button text
-    }
-  
-    // Save updated wishlist to sessionStorage
-    sessionStorage.setItem("wishlist", JSON.stringify(wishlist));
-  
-    // alert(isInWishlist ? "Removed from Wishlist" : "Added to Wishlist");
+  localStorage.setItem("cart", JSON.stringify(cart));
+  // alert("Product added to cart!");
+}
+
+function toggleWishlist(product, btn) {
+  let wishlist = JSON.parse(sessionStorage.getItem("wishlist")) || [];
+
+  // Check if the product is already in the wishlist
+  const isInWishlist = wishlist.some(item => item.id === product.id);
+
+  if (isInWishlist) {
+    // If the product is in the wishlist, remove it
+    wishlist = wishlist.filter(item => item.id !== product.id);
+    btn.querySelector("i").className = "far fa-heart"; // Change to outline heart
+  } else {
+    // If the product is not in the wishlist, add it
+    wishlist.push(product);
+    btn.querySelector("i").className = "fas fa-heart"; // Change to filled heart
   }
-  
-  function toggleCart(product, btn) {
+
+  // Save updated wishlist to sessionStorage
+  sessionStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+  // Update wishlist count dynamically
+  updateCounts();
+}
+
+function toggleCart(product, btn) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   // Check if the product is already in the cart
@@ -156,11 +119,28 @@ function removeFromWishlist(id) {
   } else {
     // If the product is not in the cart, add it
     cart.push({ ...product, quantity: 1 });
-    btn.textContent = "Remove from Cart"; // Update button text
+    btn.textContent = "Remove "; // Update button text
   }
 
   // Save updated cart to localStorage
   localStorage.setItem("cart", JSON.stringify(cart));
 
-//   alert(isInCart ? "Removed from Cart" : "Added to Cart");
+  // Update cart count dynamically
+  updateCounts();
+}
+
+function updateCounts() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const wishlist = JSON.parse(sessionStorage.getItem("wishlist")) || []; // Use sessionStorage for wishlist
+
+  const cartCountElement = document.getElementById("cart-count");
+  const wishlistCountElement = document.getElementById("wishlist-count");
+
+  if (cartCountElement) {
+    cartCountElement.textContent = cart.length; // Update cart count
+  }
+
+  if (wishlistCountElement) {
+    wishlistCountElement.textContent = wishlist.length; // Update wishlist count
+  }
 }

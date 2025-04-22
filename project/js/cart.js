@@ -8,38 +8,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   cart.forEach(item => {
+    // Use a template literal to create the cart item structure
     const itemCard = document.createElement("div");
     itemCard.className = "cart-item";
+    itemCard.innerHTML = `
+      <img src="${item.thumbnail}" alt="${item.title}" width="80" />
+      <h3>${item.title}</h3>
+      <p>Price: $${item.price}</p>
+      <p>Quantity: ${item.quantity}</p>
+      <button class="remove-btn" data-id="${item.id}">Remove</button>
+    `;
 
-    const img = document.createElement("img");
-    img.src = item.thumbnail;
-    img.alt = item.title;
-    img.width = 80;
-
-    const title = document.createElement("h3");
-    title.textContent = item.title;
-
-    const price = document.createElement("p");
-    price.textContent = `Price: $${item.price}`;
-
-    const quantity = document.createElement("p");
-    quantity.textContent = `Quantity: ${item.quantity}`;
-
-    // Create a "Remove from Cart" button
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "Remove from Cart";
-    removeButton.className = "remove-btn";
-
-    // Add event listener to remove the item from the cart
+    // Add event listener to the "Remove from Cart" button
+    const removeButton = itemCard.querySelector(".remove-btn");
     removeButton.addEventListener("click", () => {
       removeFromCart(item.id);
     });
-
-    itemCard.appendChild(img);
-    itemCard.appendChild(title);
-    itemCard.appendChild(price);
-    itemCard.appendChild(quantity);
-    itemCard.appendChild(removeButton);
 
     cartContainer.appendChild(itemCard);
   });
