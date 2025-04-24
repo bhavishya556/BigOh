@@ -1,5 +1,6 @@
 //data tyep 
 //number boolean String
+let ghcgfxcgbhj =9
 
 let x : number = 10;
 console.log(x);
@@ -26,6 +27,9 @@ function printSumWithTypeAlica(sum:sumFun,num1:number,num2:number){
 
 }
 
+type k = ReturnType<sumFun>;
+
+
 printSum(sum,x,10)
 printSumWithTypeAlica(sum,x,90)
 
@@ -40,6 +44,8 @@ function greet(name: string, greeting?: string ,date:Date = new Date()): string 
 
 console.log(greet("bhavi")); 
 console.log(greet("bhavishya", "Good morning"));
+
+export {}
 
 
 

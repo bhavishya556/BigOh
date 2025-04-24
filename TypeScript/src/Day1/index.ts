@@ -27,6 +27,8 @@ function totalSalary(salaryObject: { [key: string]: number }) {
   
   const options: FutureObj = {
     age: 1000,
+    age2: 1000,
+    age3: 1000,
     anyString: 'The request timed out!',
     isFileUpload: false
   };
@@ -36,3 +38,5 @@ function totalSalary(salaryObject: { [key: string]: number }) {
     console.log(obj);
 
   }
+
+  export {}

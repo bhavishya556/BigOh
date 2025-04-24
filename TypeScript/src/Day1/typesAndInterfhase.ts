@@ -5,9 +5,7 @@ type human = {
     age?:any
 
 }
-const obj : any = {
-    
-}
+
 interface Dev extends human{
     postion?:String
 }
@@ -32,7 +30,7 @@ type FullstackDev = FrontendDev & BackendDev;
 type User = BackendDev | FrontendDev | FullstackDev;
 
 
-
+// any vs unknown vs never
 
 
 const user : User = {
@@ -51,7 +49,7 @@ const user2 : FrontendDev = {
     postion:"junior frontend dev",
     html:true,
     css:true,
-    js:true,
+
     react:true,
 
    
@@ -96,3 +94,5 @@ printDev(user)
 printDev2(user2)
 printDev3(user)
 printDev(user)
+
+export {}

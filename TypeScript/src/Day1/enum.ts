@@ -78,3 +78,4 @@ going3(Direction.East);
 going3(Direction.South);
 going3(Direction.West);
 going3(Direction.North);
+export {}

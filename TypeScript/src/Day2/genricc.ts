@@ -1,3 +1,17 @@
+class Genraic<T>{
+   something:T;
+    someThingArr : T[] = []
+
+
+    constructor(something:T){
+        this.someThingArr.push(something)
+        this.something = something
+
+
+    }
+}
+
+
 let arrString = ["first","second"]
 let arrNum = [1,2,3,4]
 
@@ -12,9 +26,28 @@ function returnFirstElement2(arr:(number[] | string[])){
     return arr[0];
 }
 
+function fun<T>(value:T){
+    console.log(v);
+
+}
+
+fun<number>('10');
 
 console.log(returnFirstElement<string>(arrString));
 console.log(returnFirstElement(arrNum)); // i can skip type also
 
 console.log(returnFirstElement2(arrString));
 console.log(returnFirstElement2(arrNum));
+
+
+
+export {}
+
+
+class name {
+    constructor() {
+        
+    }
+}
+
+
