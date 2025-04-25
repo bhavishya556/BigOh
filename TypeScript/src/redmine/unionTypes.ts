@@ -22,3 +22,5 @@ const changeToSting =<T extends string | number> (someting:T  ):string=>{
 changeToSting<number>(123)
 changeToSting<string>("123")
 
+export{}
+   

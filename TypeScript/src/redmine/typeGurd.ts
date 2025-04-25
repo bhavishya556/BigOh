@@ -25,18 +25,21 @@ class Cat extends Animal{
 
 
 
-const animalArray:Animal[] = [new Dog(),new Cat() ,new Dog()]
+// const animalArray:Animal[] = [new Dog(),new Cat() ,new Dog()]
 
-const filterDogs = (animalArray: Animal[]): Dog[] => {
-    // Use the filter method with a proper type guard
-    const dogArr: Dog[] = animalArray.filter((curAnimal)=>{
+// const filterDogs = (animalArray: Animal[]): Dog[] => {
+//     // Use the filter method with a proper type guard
+//     const dogArr = animalArray.filter((curAnimal)=>{
 
-        if(curAnimal instanceof Dog){
-            return true
-        }
+//         if(curAnimal instanceof Dog){
+//             return true
+//         }
         
-    } 
-    );
+//     } 
+//     );
 
-    return dogArr; 
-};
+//     return dogArr; 
+// };
+
+export{}
+   

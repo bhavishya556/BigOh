@@ -26,3 +26,5 @@ let user : User = {
 }
 
 console.log(describePerson(user))
+export{}
+   

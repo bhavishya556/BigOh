@@ -16,3 +16,5 @@ function doubelArr (arr:Array<number>):Object{
 }
 
 console.log( doubelArr(arr));
+export{}
+   

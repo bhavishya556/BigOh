@@ -31,3 +31,5 @@ const obj2 = {...obj}
 obj2.arr[1]=0;
 
 const c = arr
+export{}
+   

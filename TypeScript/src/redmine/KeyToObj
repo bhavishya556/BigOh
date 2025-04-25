@@ -1,0 +1,45 @@
+// Description
+
+// Function that will take first parameter a object and second one a object with new properties name to be updated. When it typing the second argument it should give suggestion.
+
+// const user = {
+//     firstName: "Tony";
+//     lastName: "Stark";
+//     age: 54;
+// }
+
+// const transformUser = transformKeys(user, { firstName: 'first', lastName: 'last' })
+// Should give return type as
+
+// {
+//     first: string;
+//     last: string;
+//     age: number;
+// }
+
+
+const user = {
+    firstName: "Tony",
+    lastName: "Stark",
+    age: 54,
+}
+
+type UserType = typeof user;
+
+
+
+
+const userObj = { firstName: 'first', lastName: 'last' }
+
+let keys = Object.keys(userObj);
+let value = Object.values(userObj);
+
+type result = {keys : typeof value }
+
+
+// const newO :result = {
+//     first:"String"
+// }
+
+
+

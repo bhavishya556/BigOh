@@ -32,4 +32,6 @@ function fun (obj : keyof typeof data){
     console.log(obj);
 }
 
-fun('')
+// fun("")
+export{}
+   

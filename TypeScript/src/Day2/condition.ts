@@ -22,6 +22,7 @@ let typeInference = [0, 1, null];
 type v = [1,2,3,4,"l", null]
 
 let num1:v=[1,2,3,4,"l", null];
+export{}
    
 
 

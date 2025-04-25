@@ -21,6 +21,7 @@ going1(Direction.South);
 going1(Direction.West);
 going1(Direction.North);
 
+
 console.log("defaul enum");
 
 

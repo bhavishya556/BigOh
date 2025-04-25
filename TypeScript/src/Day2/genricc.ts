@@ -26,12 +26,9 @@ function returnFirstElement2(arr:(number[] | string[])){
     return arr[0];
 }
 
-function fun<T>(value:T){
-    console.log(v);
 
-}
 
-fun<number>('10');
+
 
 console.log(returnFirstElement<string>(arrString));
 console.log(returnFirstElement(arrNum)); // i can skip type also
@@ -51,3 +48,5 @@ class name {
 }
 
 
+export{}
+   

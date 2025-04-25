@@ -49,7 +49,7 @@ const user2 : FrontendDev = {
     postion:"junior frontend dev",
     html:true,
     css:true,
-
+js:true,
     react:true,
 
    
