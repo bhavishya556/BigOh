@@ -29,3 +29,4 @@ function getPropertyValue(user:User, str:keyof User){
 }
 let value = getPropertyValue(user,"age")
 console.log(value, typeof value);
+export{}

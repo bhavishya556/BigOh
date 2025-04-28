@@ -20,3 +20,4 @@ async function fetchDataAsync(){
 
 // Call the async function
 fetchDataAsync();
+export{}

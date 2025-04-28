@@ -1,23 +1,17 @@
-type personInfo = personName | otherDetails;
+// Description
 
-type personName = "John" | "Jack" | "Justin";
+// Use of satisfies
+// Use of as
+ // Showcase the proper working example
 
-type otherDetails = {
-  id: number;
-  age: number;
-};
 
-type Person = {
-  myInfo: personInfo;
-  myOtherInfo: personInfo;
-};
 
-const applicant = {
-  myInfo: "John",
-  myOtherInfo: { id: 123, age: true },
-} ;
+//  let accountCode = '123';
+//     let castedAccountCode = <number>accountCode;
 
-console.log(applicant.myInfo.toUpperCase);
+
+let accountCode = 123;
+let castedAccountCode = accountCode as number;
 
 
 type TAddress = {
@@ -46,7 +40,4 @@ type TAddress = {
       country: "USA",
     },
   } satisfies TUser;
-  
-  // .log(joe.address.postCode); // Property 'postCode' does not exist on type 'string | TAddress'. Property 'postCode' does not exist on type 'string'.(2339)
-
-export { };
+export{}

@@ -62,33 +62,33 @@ const obj = {
 
   }
 
-  //add employee to department
+  // //add employee to department
 
-    function addEmployee(departmentName, employee) {
-        const department = obj.company.departments.find(dep => dep.name === departmentName);
-        if(department){
-            department.employees.push(employee);
-            console.log(`Employee ${employee.name} added to ${departmentName} department.`);
+  //   function addEmployee(departmentName, employee) {
+  //       const department = obj.company.departments.find(dep => dep.name === departmentName);
+  //       if(department){
+  //           department.employees.push(employee);
+  //           console.log(`Employee ${employee.name} added to ${departmentName} department.`);
 
-        } else {
-            console.log(`Department ${departmentName} not found.`);
-        }
-    }
+  //       } else {
+  //           console.log(`Department ${departmentName} not found.`);
+  //       }
+  //   }
 
-    function editEmployee (departmentName, employeeId, updatedInfo) {
-        const department = obj.company.departments.find(dep => dep.name === departmentName);
-        if(department){
-            department.employees = department.employees.map(emp => {
-                if(emp.id === employeeId){
-                    return {...emp, ...updatedInfo};
-                }
-                return emp;
-            });
+  //   function editEmployee (departmentName, employeeId, updatedInfo) {
+  //       const department = obj.company.departments.find(dep => dep.name === departmentName);
+  //       if(department){
+  //           department.employees = department.employees.map(emp => {
+  //               if(emp.id === employeeId){
+  //                   return {...emp, ...updatedInfo};
+  //               }
+  //               return emp;
+  //           });
             
-        } else {
-            console.log(`Department ${departmentName} not found.`);
-        }
-    }
+  //       } else {
+  //           console.log(`Department ${departmentName} not found.`);
+  //       }
+  //   }
 
     
 

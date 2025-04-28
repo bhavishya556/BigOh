@@ -33,3 +33,6 @@ obj2.arr[1]=0;
 const c = arr
 export{}
    
+let obj1 = {1:"one"}
+let obj3 = {2:"two",1:"one",3:"three"}
+const mobj = {...obj1,obj3}

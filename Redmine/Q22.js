@@ -35,3 +35,7 @@ const finalReport = emp_data.employees.map((emp) => {
 console.log(JSON.stringify(finalReport, null, 2));
 
 const h = await jsfdn()
+
+const promis = new mypromise(res)
+
+promis.then()
